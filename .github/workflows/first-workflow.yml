@@ -1,8 +1,25 @@
 name: My First workflow_dispatch
 on: [push]
 
+# jobs:
+#   my-job:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - run: echo "Hello Flow"
+
+# test:
+#   runs-on: ubuntu-latest
+#   steps:
+#     - run: echo "build"
+
 jobs:
-  my-job:
+  test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x, 21.x, 22, x]
     steps:
-      - run: echo "Hello Flow"
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{matrix.node-version}}
+      - run: npm test
